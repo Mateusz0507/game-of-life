@@ -9,11 +9,8 @@ class Gui:
         self.window = pg.display.set_mode((self.window_w, self.window_h))
         self.cells_w = self.window_w//CELL_SIZE # Number of cells in every row
         self.cells_h = self.window_h//CELL_SIZE # Number of cells in every column
-        self.new_tick = [[0 for i in range(self.cells_w)] for j in range(self.cells_h)] # Board of cells
-        self.last_tick = [[0 for i in range(self.cells_w)] for j in range(self.cells_h)] # Board of cells
+        self.board = [[0 for i in range(self.cells_w)] for j in range(self.cells_h)] # Board of cells
         self.fps = 3
         self.running = True
         self.pause_mode = True
         self.clock = pg.time.Clock()
-
-

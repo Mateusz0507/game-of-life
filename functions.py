@@ -2,10 +2,9 @@
 from constants import *
 
 
-def calculating(old_board, new_board, width, height):
-	for x in range(width):
-		for y in range(height):
-			old_board[y][x] = new_board[y][x]
+
+def calculating(old_board, width, height):
+	new_board = [[0 for i in range(width)] for j in range(height)]
 
 	for x in range(width):
 		for y in range(height):
@@ -18,7 +17,7 @@ def calculating(old_board, new_board, width, height):
 				new_board[y][x] = 1
 			else:
 				new_board[y][x] = 0
-	return old_board, new_board
+	return new_board
 
 
 def draw_board(window, board, width, height):
