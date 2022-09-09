@@ -2,6 +2,7 @@
 from constants import MENU_WIDTH, CELL_SIZE
 from constants import WHITE, RED, GREEN
 
+
 class Board:
 	def __init__(self, window_w, window_h):
 		self.cells_w = (window_w - MENU_WIDTH)//CELL_SIZE # Number of cells in every row
