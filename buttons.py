@@ -1,6 +1,6 @@
 ﻿import pygame as pg
 from constants import FONT_SIZE
-from constants import LIGHT_GREY, BLACK
+from colors import LIGHT_GREY, BLACK
 
 
 class Button:

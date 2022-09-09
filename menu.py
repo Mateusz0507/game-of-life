@@ -1,7 +1,7 @@
 import pygame as pg
 from buttons import FillButton
 from constants import MENU_WIDTH, STARTING_WINDOW_HEIGHT
-from constants import DARK_GREY
+from colors import DARK_GREY
 
 
 class Menu:

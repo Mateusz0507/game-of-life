@@ -1,9 +1,9 @@
 import pygame as pg
-from constants import *
 from menu import Menu
 from board import Board
-from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, MENU_WIDTH
 from buttons import FillButton
+from colors import BLACK
+from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, MENU_WIDTH
 
 
 

@@ -1,6 +1,6 @@
 ﻿import pygame as pg
 from constants import MENU_WIDTH, CELL_SIZE
-from constants import WHITE, RED, GREEN
+from colors import WHITE, RED, GREEN
 
 
 class Board:
