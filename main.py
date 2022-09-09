@@ -54,7 +54,7 @@ def main():
 				board.change_cell(mouse_x, mouse_y, 0)
 
 		if not board.pause_mode and time.time() - board.last_update > 1/board.fps:
-			board.calculating_new_array()
+			board.update()
 			board.last_update = time.time()
 
 		window.fill(BLACK)

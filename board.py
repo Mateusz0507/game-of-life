@@ -21,7 +21,7 @@ class Board:
 			self.array[y][x] = new_value
 
 
-	def calculating_new_array(self):
+	def update(self):
 		new_array = [[0 for i in range(self.cells_w)] for j in range(self.cells_h)]
 
 		for x in range(self.cells_w):
@@ -46,10 +46,6 @@ class Board:
 				if self.array[y][x] == 1:
 					pg.draw.rect(window, WHITE, [x*CELL_SIZE + MENU_WIDTH, y*CELL_SIZE, CELL_SIZE, CELL_SIZE], 0)
 
-
-		if self.pause_mode:
-			color = RED
-		else:
-			color = GREEN
+		color = RED if self.pause_mode else GREEN
 		corners = [[MENU_WIDTH, 0], [window_w, 0], [window_w, window_h], [MENU_WIDTH, window_h]]
 		pg.draw.polygon(window, color, corners, 5)
