@@ -1,7 +1,8 @@
 import pygame as pg
+import sys
 from menu import Menu
 from board import Board
-from buttons import EmptyButton, FillButton
+from buttons import EscapeButton, EmptyButton, FillButton
 from colors import BLACK
 from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, MENU_WIDTH
 
@@ -21,26 +22,28 @@ def main():
 	clock = pg.time.Clock()
 	refresh_cooldown = 60/fps
 
-	running = True
-	while running:
+	while True:
 		clock.tick(60)
 		mouse_x, mouse_y = pg.mouse.get_pos()
 
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
-				pg.quit()
+				sys.exit()
 
 			if event.type == pg.MOUSEBUTTONDOWN and mouse_x <= MENU_WIDTH:
 				for button in menu.buttons:
 					if button.if_clicked(mouse_x, mouse_y):
+						if type(button) == EscapeButton:
+							sys.exit()
 						if type(button) == EmptyButton:
 							button.use(board.array, board.cells_w, board.cells_h)
 						if type(button) == FillButton:
 							button.use(board.array, board.cells_w, board.cells_h)
 
+
 			if event.type == pg.KEYDOWN:
 				if event.key == pg.K_ESCAPE:
-					running = False
+					sys.exit()
 				elif event.key == pg.K_SPACE:
 					board.pause_mode = not board.pause_mode
 				elif event.key == pg.K_a and fps > 1:

@@ -26,6 +26,11 @@ class Button:
 
 
 
+class EscapeButton(Button):
+    pass
+
+
+
 class EmptyButton(Button):
     def use(self, board, width, height):
         for x in range(width):
