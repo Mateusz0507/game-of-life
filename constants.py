@@ -1,5 +1,11 @@
-﻿BLACK =     (0, 0, 0)
-RED =       (255, 0, 0)
-WHITE =     (255, 255, 255)
+﻿BLACK =         (0, 0, 0)
+RED =           (255, 0, 0)
+GREEN =			(0, 255, 0)
+WHITE =         (255, 255, 255)
+LIGHT_GREY =    (195, 195, 195)
+DARK_GREY =     (127, 127, 127)
 
 CELL_SIZE = 10
+MENU_WIDTH = 100
+STARTING_WINDOW_WIDTH = 600
+STARTING_WINDOW_HEIGHT = 600

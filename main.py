@@ -1,49 +1,55 @@
 import pygame as pg
-from functions import *
 from constants import *
-from gui import Gui
+from menu import Menu
+from board import Board
+from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT
+
 
 
 def main():
-	gui = Gui()
-
 	pg.init()
-	gui.window = pg.display.set_mode((gui.window_w, gui.window_h))
+	window_w = STARTING_WINDOW_WIDTH # Window width
+	window_h = STARTING_WINDOW_HEIGHT # Window height
+	window = pg.display.set_mode((window_w, window_h))
 	pg.display.set_caption("Game of Life")
 
-	refresh_cooldown = 60/gui.fps
+	menu = Menu() # Left-side bar with buttons
+	board = Board(window_w, window_h) # Main board where cells are displayed
 
-	while gui.running:
-		gui.clock.tick(60)
+	fps = 3
+	clock = pg.time.Clock()
+	refresh_cooldown = 60/fps
+
+	running = True
+	while running:
+		clock.tick(60)
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
 				pg.quit()
 			if event.type == pg.KEYDOWN:
 				if event.key == pg.K_ESCAPE:
-					gui.running = False
+					running = False
 				elif event.key == pg.K_SPACE:
-					gui.pause_mode = not gui.pause_mode
-				elif event.key == pg.K_a and gui.fps > 1:
-					gui.fps -= 1
+					board.pause_mode = not board.pause_mode
+				elif event.key == pg.K_a and fps > 1:
+					fps -= 1
 				elif event.key == pg.K_d:
-					gui.fps += 1
+					fps += 1
 			if pg.mouse.get_pressed()[0]:
 				x, y = pg.mouse.get_pos()
-				gui.board[y//CELL_SIZE][x//CELL_SIZE] = 1
+				board.change_cell(x, y, 1)
 			elif pg.mouse.get_pressed()[2]:
 				x, y = pg.mouse.get_pos()
-				gui.board[y//CELL_SIZE][x//CELL_SIZE] = 0
+				board.change_cell(x, y, 0)
 
-		gui.window.fill(BLACK)
-
-		if not gui.pause_mode and refresh_cooldown < 1:
-			gui.board = calculating(gui.board, gui.cells_w, gui.cells_h)
-			refresh_cooldown = 60/gui.fps
+		if not board.pause_mode and refresh_cooldown < 1:
+			board.calculating_new_array()
+			refresh_cooldown = 60/fps
 		refresh_cooldown -= 1
 
-		draw_board(gui.window, gui.board, gui.cells_w, gui.cells_h)
-		if gui.pause_mode:
-			draw_pause_mode(gui.window, gui.window_w, gui.window_h, 5)
+		window.fill(BLACK)
+		menu.draw(window)
+		board.draw(window, window_w, window_h)
 		pg.display.update()
 
 
