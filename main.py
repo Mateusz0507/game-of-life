@@ -1,5 +1,5 @@
 import pygame as pg
-import time, sys
+import sys, time
 from menu import Menu
 from board import Board
 from buttons import EscapeButton, EmptyButton, FillButton, FpsUpButton, FpsDownButton
@@ -18,9 +18,6 @@ def main():
 	menu = Menu() # Left sidebar with buttons
 	board = Board(window_w, window_h) # Main board where cells are displayed
 
-	fps = 3
-	last_update = time.time()
-
 	while True:
 		mouse_x, mouse_y = pg.mouse.get_pos()
 
@@ -37,28 +34,28 @@ def main():
 						elif type(button) == FillButton:
 							button.use(board.array, board.cells_w, board.cells_h)
 						elif type(button) == FpsUpButton:
-							fps += 1
+							board.fps += 1
 						elif type(button) == FpsDownButton:
-							if fps > 1:
-								fps -= 1
+							if board.fps > 1:
+								board.fps -= 1
 			elif event.type == pg.KEYDOWN:
 				if event.key == pg.K_ESCAPE:
 					sys.exit()
 				elif event.key == pg.K_SPACE:
 					board.pause_mode = not board.pause_mode
-				elif event.key == pg.K_a and fps > 1:
-					fps -= 1
+				elif event.key == pg.K_a and board.fps > 1:
+					board.fps -= 1
 				elif event.key == pg.K_d:
-					fps += 1
+					board.fps += 1
 
 			if pg.mouse.get_pressed()[0] and mouse_x >= MENU_WIDTH:
 				board.change_cell(mouse_x, mouse_y, 1)
 			elif pg.mouse.get_pressed()[2] and mouse_x >= MENU_WIDTH:
 				board.change_cell(mouse_x, mouse_y, 0)
 
-		if not board.pause_mode and time.time() - last_update > 1/fps:
+		if not board.pause_mode and time.time() - board.last_update > 1/board.fps:
 			board.calculating_new_array()
-			last_update = time.time()
+			board.last_update = time.time()
 
 		window.fill(BLACK)
 		menu.draw(window)

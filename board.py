@@ -1,5 +1,6 @@
 ﻿import pygame as pg
-from constants import MENU_WIDTH, CELL_SIZE
+import time
+from constants import MENU_WIDTH, CELL_SIZE, STARTING_FPS
 from colors import WHITE, RED, GREEN
 
 
@@ -9,6 +10,8 @@ class Board:
 		self.cells_h = window_h//CELL_SIZE # Number of cells in every column
 		self.array = [[0 for i in range(self.cells_w)] for j in range(self.cells_h)] # Board of cells
 		self.pause_mode = True
+		self.fps = STARTING_FPS
+		self.last_update = time.time()
 
 
 	def change_cell(self, mouse_x, mouse_y, new_value):
