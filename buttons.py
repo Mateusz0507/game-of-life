@@ -25,12 +25,6 @@ class Button:
         window.blit(text, text_rect)
 
 
-
-class EscapeButton(Button):
-    pass
-
-
-
 class EmptyButton(Button):
     def use(self, board, width, height):
         for x in range(width):
@@ -38,9 +32,20 @@ class EmptyButton(Button):
                 board[y][x] = 0
 
 
-
 class FillButton(Button):
     def use(self, board, width, height):
         for x in range(width):
             for y in range(height):
                 board[y][x] = 1
+
+
+class EscapeButton(Button):
+    pass
+
+
+class FpsUpButton(Button):
+    pass
+
+
+class FpsDownButton(Button):
+    pass
