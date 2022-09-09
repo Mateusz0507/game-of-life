@@ -21,6 +21,12 @@ class Board:
 			self.array[y][x] = new_value
 
 
+	def is_time_to_update(self):
+		if time.time() - self.last_update > 1/self.fps:
+			return True
+		return False
+
+
 	def update(self):
 		new_array = [[0 for i in range(self.cells_w)] for j in range(self.cells_h)]
 
@@ -38,6 +44,7 @@ class Board:
 				else:
 					new_array[y][x] = 0
 		self.array = new_array
+		self.last_update = time.time()
 
 
 	def draw(self, window, window_w, window_h):

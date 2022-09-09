@@ -1,5 +1,5 @@
 import pygame as pg
-import sys, time
+import sys
 from menu import Menu
 from board import Board
 from buttons import EscapeButton, EmptyButton, FillButton, FpsUpButton, FpsDownButton
@@ -53,9 +53,8 @@ def main():
 			elif pg.mouse.get_pressed()[2] and mouse_x >= MENU_WIDTH:
 				board.change_cell(mouse_x, mouse_y, 0)
 
-		if not board.pause_mode and time.time() - board.last_update > 1/board.fps:
+		if not board.pause_mode and board.is_time_to_update():
 			board.update()
-			board.last_update = time.time()
 
 		window.fill(BLACK)
 		menu.draw(window)
