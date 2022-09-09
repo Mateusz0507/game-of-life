@@ -1,6 +1,6 @@
 ﻿import pygame as pg
 from constants import MENU_WIDTH, CELL_SIZE
-from constants import WHITE, RED
+from constants import WHITE, RED, GREEN
 
 class Board:
 	def __init__(self, window_w, window_h):
@@ -44,5 +44,8 @@ class Board:
 
 
 		if self.pause_mode:
-			corners = [[MENU_WIDTH, 0], [window_w, 0], [window_w, window_h], [MENU_WIDTH, window_h]]
-			pg.draw.polygon(window, RED, corners, 5)
+			color = RED
+		else:
+			color = GREEN
+		corners = [[MENU_WIDTH, 0], [window_w, 0], [window_w, window_h], [MENU_WIDTH, window_h]]
+		pg.draw.polygon(window, color, corners, 5)
