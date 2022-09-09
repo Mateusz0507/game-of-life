@@ -26,6 +26,14 @@ class Button:
 
 
 
+class EmptyButton(Button):
+    def use(self, board, width, height):
+        for x in range(width):
+            for y in range(height):
+                board[y][x] = 0
+
+
+
 class FillButton(Button):
     def use(self, board, width, height):
         for x in range(width):

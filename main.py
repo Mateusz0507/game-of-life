@@ -1,7 +1,7 @@
 import pygame as pg
 from menu import Menu
 from board import Board
-from buttons import FillButton
+from buttons import EmptyButton, FillButton
 from colors import BLACK
 from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, MENU_WIDTH
 
@@ -33,6 +33,8 @@ def main():
 			if event.type == pg.MOUSEBUTTONDOWN and mouse_x <= MENU_WIDTH:
 				for button in menu.buttons:
 					if button.if_clicked(mouse_x, mouse_y):
+						if type(button) == EmptyButton:
+							button.use(board.array, board.cells_w, board.cells_h)
 						if type(button) == FillButton:
 							button.use(board.array, board.cells_w, board.cells_h)
 

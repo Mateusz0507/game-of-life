@@ -1,5 +1,5 @@
 import pygame as pg
-from buttons import FillButton
+from buttons import EmptyButton, FillButton
 from constants import MENU_WIDTH, STARTING_WINDOW_HEIGHT
 from colors import DARK_GREY
 
@@ -9,7 +9,8 @@ class Menu:
         self.width = MENU_WIDTH
         self.height = STARTING_WINDOW_HEIGHT
         self.buttons = [
-            FillButton(50, 30, 80, 40, 'Fill')]
+            EmptyButton(self.width/2, 25, 80, 30, 'Empty'),
+            FillButton(self.width/2, 65, 80, 30, 'Fill')]
 
 
     def draw(self, window):
