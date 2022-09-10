@@ -2,7 +2,7 @@ import pygame as pg
 import sys
 from menu import Menu
 from board import Board
-from buttons import EscapeButton, EmptyButton, FillButton, FpsUpButton, FpsDownButton
+from components import EscapeButton, EmptyButton, FillButton, FpsUpButton, FpsDownButton
 from colors import BLACK
 from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, MENU_WIDTH
 
@@ -55,6 +55,8 @@ def main():
 
 		if not board.pause_mode and board.is_time_to_update():
 			board.update()
+
+		menu.fps_display.amount = board.fps
 
 		window.fill(BLACK)
 		menu.draw(window)
