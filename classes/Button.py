@@ -1,6 +1,6 @@
 ﻿import pygame as pg
 from constants import FONT_SIZE
-from colors import WHITE, LIGHT_GREY, BLACK
+from colors import LIGHT_GREY, BLACK
 
 
 class Button:
@@ -12,10 +12,10 @@ class Button:
         self.sign = sign
         self.rect = pg.Rect(x - width/2, y - height/2, width, height)
 
-
     def if_clicked(self, mouse_x, mouse_y):
-        return True if self.rect.collidepoint(mouse_x, mouse_y) else False
-
+        if self.rect.collidepoint(mouse_x, mouse_y):
+            return True
+        return False
 
     def draw(self, window):
         pg.draw.rect(window, LIGHT_GREY, self.rect, 0)
@@ -49,22 +49,3 @@ class FpsUpButton(Button):
 
 class FpsDownButton(Button):
     pass
-
-
-class Display:
-    def __init__(self, x, y, width, height, prefix, amount):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.prefix = prefix
-        self.amount = amount
-        self.rect = pg.Rect(x - width/2, y - height/2, width, height)
-
-
-    def draw(self, window):
-        pg.draw.rect(window, BLACK, self.rect, 0)
-        message = f'{self.prefix}: {self.amount}'
-        text = pg.font.Font(None, FONT_SIZE).render(message, True, WHITE)
-        text_rect = text.get_rect(center=(self.x, self.y))
-        window.blit(text, text_rect)
