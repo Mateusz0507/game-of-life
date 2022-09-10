@@ -46,10 +46,6 @@ def main():
 					sys.exit()
 				elif (event.key == pg.K_SPACE):
 					board.pause_mode = not board.pause_mode
-				elif (event.key == pg.K_a and board.fps > 1):
-					board.fps -= 1
-				elif (event.key == pg.K_d):
-					board.fps += 1
 		if (pg.mouse.get_pressed()[0] and mouse_x >= MENU_WIDTH):
 			board.change_cell(mouse_x, mouse_y, 1)
 		elif (pg.mouse.get_pressed()[2] and mouse_x >= MENU_WIDTH):

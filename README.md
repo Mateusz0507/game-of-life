@@ -8,4 +8,4 @@
 ## Controls
 - **_left/right mouse button_ to revive/kill a cell**
 - **_ESCAPE_ to exit the program**
-- **time managment: _A_ slow, _SPACE_ start/stop, _D_ speed up**
+- **_SPACE_ to turn on/off pause mode**
