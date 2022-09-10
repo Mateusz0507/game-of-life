@@ -2,13 +2,13 @@ import pygame as pg
 from classes.Button import EscapeButton, EmptyButton, FillButton, \
                            FpsUpButton, FpsDownButton
 from classes.Display import Display
-from constants import MENU_WIDTH, STARTING_WINDOW_HEIGHT, STARTING_FPS
+from constants import SIDEBAR_WIDTH, STARTING_WINDOW_HEIGHT, STARTING_FPS
 from colors import DARK_GREY
 
 
-class Menu:
+class Sidebar:
     def __init__(self):
-        self.width = MENU_WIDTH
+        self.width = SIDEBAR_WIDTH
         self.height = STARTING_WINDOW_HEIGHT
         self.buttons = [
             EscapeButton(30, 25, 40, 30, 'Esc'),

@@ -1,11 +1,11 @@
 import pygame as pg
 import sys
-from classes.Menu import Menu
+from classes.Sidebar import Sidebar
 from classes.Board import Board
 from classes.Button import EscapeButton, EmptyButton, FillButton, \
 						   FpsUpButton, FpsDownButton
 from colors import BLACK
-from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, MENU_WIDTH
+from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, SIDEBAR_WIDTH
 
 
 def main():
@@ -16,7 +16,7 @@ def main():
 	pg.display.set_caption("Game of Life")
 
 	# Left sidebar with buttons
-	menu = Menu()
+	sidebar = Sidebar()
 	# Main board where cells are displayed
 	board = Board(window_w, window_h)
 
@@ -25,8 +25,9 @@ def main():
 		for event in pg.event.get():
 			if (event.type == pg.QUIT):
 				sys.exit()
-			elif (event.type == pg.MOUSEBUTTONDOWN and mouse_x <= MENU_WIDTH):
-				for button in menu.buttons:
+			elif (event.type == pg.MOUSEBUTTONDOWN and
+					mouse_x <= SIDEBAR_WIDTH):
+				for button in sidebar.buttons:
 					if button.if_clicked(mouse_x, mouse_y):
 						if isinstance(button, EscapeButton):
 							sys.exit()
@@ -46,17 +47,17 @@ def main():
 					sys.exit()
 				elif (event.key == pg.K_SPACE):
 					board.pause_mode = not board.pause_mode
-		if (pg.mouse.get_pressed()[0] and mouse_x >= MENU_WIDTH):
+		if (pg.mouse.get_pressed()[0] and mouse_x >= SIDEBAR_WIDTH):
 			board.change_cell(mouse_x, mouse_y, 1)
-		elif (pg.mouse.get_pressed()[2] and mouse_x >= MENU_WIDTH):
+		elif (pg.mouse.get_pressed()[2] and mouse_x >= SIDEBAR_WIDTH):
 			board.change_cell(mouse_x, mouse_y, 0)
 
 		if (board.is_time_to_update() and not board.pause_mode):
 			board.update()
-		menu.fps_display.amount = board.fps
+		sidebar.fps_display.amount = board.fps
 
 		window.fill(BLACK)
-		menu.draw(window)
+		sidebar.draw(window)
 		board.draw(window, window_w, window_h)
 		pg.display.update()
 
