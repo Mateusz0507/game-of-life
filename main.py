@@ -5,7 +5,7 @@ from classes.Board import Board
 from classes.Button import EscapeButton, EmptyButton, FillButton, \
 						   FpsUpButton, FpsDownButton
 from colors import BLACK
-from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, SIDEBAR_WIDTH
+from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT
 
 
 def main():
@@ -26,7 +26,7 @@ def main():
 			if (event.type == pg.QUIT):
 				sys.exit()
 			elif (event.type == pg.MOUSEBUTTONDOWN and
-					mouse_x <= SIDEBAR_WIDTH):
+					sidebar.is_mouse_over_sidebar(mouse_x)):
 				for button in sidebar.buttons:
 					if button.if_clicked(mouse_x, mouse_y):
 						if isinstance(button, EscapeButton):
@@ -47,10 +47,11 @@ def main():
 					sys.exit()
 				elif (event.key == pg.K_SPACE):
 					board.pause_mode = not board.pause_mode
-		if (pg.mouse.get_pressed()[0] and mouse_x >= SIDEBAR_WIDTH):
-			board.change_cell(mouse_x, mouse_y, 1)
-		elif (pg.mouse.get_pressed()[2] and mouse_x >= SIDEBAR_WIDTH):
-			board.change_cell(mouse_x, mouse_y, 0)
+		if not sidebar.is_mouse_over_sidebar(mouse_x):
+			if pg.mouse.get_pressed()[0]:
+				board.change_cell(mouse_x, mouse_y, 1)
+			elif pg.mouse.get_pressed()[2]:
+				board.change_cell(mouse_x, mouse_y, 0)
 
 		if (board.is_time_to_update() and not board.pause_mode):
 			board.update()

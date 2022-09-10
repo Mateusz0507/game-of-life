@@ -19,6 +19,11 @@ class Sidebar:
         self.fps_display = Display(self.width/2, 145, 80, 30,
                                    'FPS', STARTING_FPS)
 
+    def is_mouse_over_sidebar(self, mouse_x):
+        if (mouse_x <= SIDEBAR_WIDTH):
+            return True
+        return False
+
     def draw(self, window):
         pg.draw.rect(window, DARK_GREY, [0, 0, self.width, self.height], 0)
         self.fps_display.draw(window)
