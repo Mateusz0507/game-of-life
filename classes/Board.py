@@ -57,11 +57,11 @@ class Board:
                                                 CELL_SIZE,
                                                 CELL_SIZE
                                                  ], 0)
-        color = RED if self.pause_mode else GREEN
-        corners = [
-            [SIDEBAR_WIDTH, 0],
-            [window_w, 0],
-            [window_w, window_h],
-            [SIDEBAR_WIDTH, window_h]
-            ]
-        pg.draw.polygon(window, color, corners, 5)
+        #color = RED if self.pause_mode else GREEN
+        #corners = [
+        #    [SIDEBAR_WIDTH, 0],
+        #    [window_w, 0],
+        #    [window_w, window_h],
+        #    [SIDEBAR_WIDTH, window_h]
+        #    ]
+        #pg.draw.polygon(window, color, corners, 5)

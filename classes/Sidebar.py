@@ -2,7 +2,7 @@ import pygame as pg
 from classes.Button import Button
 from classes.Display import Display
 from constants import SIDEBAR_WIDTH, STARTING_WINDOW_HEIGHT, STARTING_FPS
-from colors import DARK_GREY
+from colors import DARK_GREY, GREEN
 
 
 class Sidebar:
@@ -10,16 +10,17 @@ class Sidebar:
         self.width = SIDEBAR_WIDTH
         self.height = STARTING_WINDOW_HEIGHT
         self.buttons = [
-            Button('Exit', 35, 25, 50, 30, 'Exit'),
+            Button('Exit', self.width/2, 25, 80, 30, 'Exit'),
             Button('Empty board', self.width/2, 65, 80, 30, 'Empty'),
             Button('Fill board', self.width/2, 105, 80, 30, 'Fill'),
             Button('Decrease FPS', 30, 175, 40, 30, '-'),
             Button('Increase FPS', 70, 175, 40, 30, '+'),
-            Button('Reset ticks', self.width/2, 245, 80, 30, 'Reset')
+            Button('Reset frames', self.width/2, 245, 80, 30, 'Reset'),
+            Button('Start/Stop', self.width/2, 285, 80, 30, 'Start', GREEN)
             ]
         self.fps_display = Display(self.width/2, 145, 80, 30, 'FPS',
                                    STARTING_FPS)
-        self.ticks_display = Display(self.width/2, 215, 80, 30, 'ticks', 0)
+        self.frames_display = Display(self.width/2, 215, 80, 30, 'frames', 0)
 
     def is_mouse_over_sidebar(self, mouse_x):
         return mouse_x <= SIDEBAR_WIDTH
@@ -27,6 +28,6 @@ class Sidebar:
     def draw(self, window):
         pg.draw.rect(window, DARK_GREY, [0, 0, self.width, self.height], 0)
         self.fps_display.draw(window)
-        self.ticks_display.draw(window)
+        self.frames_display.draw(window)
         for button in self.buttons:
             button.draw(window)

@@ -3,6 +3,7 @@ import sys
 from classes.Board import Board
 from classes.Button import Button
 from classes.Sidebar import Sidebar
+from functions import change_mode
 from colors import BLACK
 from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT
 
@@ -41,13 +42,15 @@ def main():
 						elif (button.name == 'Decrease FPS' and
 								board.fps > 1):
 							board.fps -= 1
-						elif (button.name == 'Reset ticks'):
-							sidebar.ticks_display.amount = 0
+						elif (button.name == 'Reset frames'):
+							sidebar.frames_display.amount = 0
+						elif (button.name == 'Start/Stop'):
+							change_mode(board, sidebar)
 			elif (event.type == pg.KEYDOWN):
 				if (event.key == pg.K_ESCAPE):
 					sys.exit()
 				elif (event.key == pg.K_SPACE):
-					board.pause_mode = not board.pause_mode
+					change_mode(board, sidebar)
 		if not sidebar.is_mouse_over_sidebar(mouse_x):
 			if pg.mouse.get_pressed()[0]:
 				board.change_cell(mouse_x, mouse_y, 1)
@@ -56,7 +59,7 @@ def main():
 
 		if (board.is_time_to_update() and not board.pause_mode):
 			board.update()
-			sidebar.ticks_display.amount += 1
+			sidebar.frames_display.amount += 1
 		sidebar.fps_display.amount = board.fps
 
 		window.fill(BLACK)
