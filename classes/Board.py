@@ -33,8 +33,8 @@ class Board:
                 sum = 0
                 for coords in [
                         (x-1, y-1), (x, y-1), (x+1, y-1),
-                        (x-1, y),			  (x+1, y),
-                        (x-1, y+1),	(x, y+1), (x+1, y+1)
+                        (x-1, y),             (x+1, y),
+                        (x-1, y+1), (x, y+1), (x+1, y+1)
                         ]:
                     if (0 <= coords[0] < self.cells_w and
                             0 <= coords[1] < self.cells_h):

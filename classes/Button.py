@@ -12,10 +12,8 @@ class Button:
         self.sign = sign
         self.rect = pg.Rect(x - width/2, y - height/2, width, height)
 
-    def if_clicked(self, mouse_x, mouse_y):
-        if self.rect.collidepoint(mouse_x, mouse_y):
-            return True
-        return False
+    def is_clicked(self, mouse_x, mouse_y):
+        return self.rect.collidepoint(mouse_x, mouse_y)
 
     def draw(self, window):
         pg.draw.rect(window, LIGHT_GREY, self.rect, 0)
