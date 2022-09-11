@@ -1,6 +1,5 @@
 import pygame as pg
-from classes.Button import EscapeButton, EmptyButton, FillButton, \
-                           FpsUpButton, FpsDownButton
+from classes.Button import Button
 from classes.Display import Display
 from constants import SIDEBAR_WIDTH, STARTING_WINDOW_HEIGHT, STARTING_FPS
 from colors import DARK_GREY
@@ -11,11 +10,11 @@ class Sidebar:
         self.width = SIDEBAR_WIDTH
         self.height = STARTING_WINDOW_HEIGHT
         self.buttons = [
-            EscapeButton(30, 25, 40, 30, 'Esc'),
-            EmptyButton(self.width/2, 65, 80, 30, 'Empty'),
-            FillButton(self.width/2, 105, 80, 30, 'Fill'),
-            FpsDownButton(30, 175, 40, 30, '-'),
-            FpsUpButton(70, 175, 40, 30, '+')]
+            Button('Exit', 35, 25, 50, 30, 'Exit'),
+            Button('Empty board', self.width/2, 65, 80, 30, 'Empty'),
+            Button('Fill board', self.width/2, 105, 80, 30, 'Fill'),
+            Button('Decrease FPS', 30, 175, 40, 30, '-'),
+            Button('Increase FPS', 70, 175, 40, 30, '+')]
         self.fps_display = Display(self.width/2, 145, 80, 30,
                                    'FPS', STARTING_FPS)
 

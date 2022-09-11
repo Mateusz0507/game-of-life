@@ -4,7 +4,8 @@ from colors import LIGHT_GREY, BLACK
 
 
 class Button:
-    def __init__(self, x, y, width, height, sign):
+    def __init__(self, name, x, y, width, height, sign):
+        self.name = name
         self.x = x
         self.y = y
         self.width = width
@@ -22,28 +23,7 @@ class Button:
         text_rect = text.get_rect(center=(self.x, self.y))
         window.blit(text, text_rect)
 
-
-class EmptyButton(Button):
-    def use(self, board, width, height):
+    def change_board(self, board, width, height, value):
         for x in range(width):
             for y in range(height):
-                board[y][x] = 0
-
-
-class FillButton(Button):
-    def use(self, board, width, height):
-        for x in range(width):
-            for y in range(height):
-                board[y][x] = 1
-
-
-class EscapeButton(Button):
-    pass
-
-
-class FpsUpButton(Button):
-    pass
-
-
-class FpsDownButton(Button):
-    pass
+                board[y][x] = value

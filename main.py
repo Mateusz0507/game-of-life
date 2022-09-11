@@ -1,9 +1,8 @@
 import pygame as pg
 import sys
-from classes.Sidebar import Sidebar
 from classes.Board import Board
-from classes.Button import EscapeButton, EmptyButton, FillButton, \
-						   FpsUpButton, FpsDownButton
+from classes.Button import Button
+from classes.Sidebar import Sidebar
 from colors import BLACK
 from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT
 
@@ -28,18 +27,18 @@ def main():
 			elif (event.type == pg.MOUSEBUTTONDOWN and
 					sidebar.is_mouse_over_sidebar(mouse_x)):
 				for button in sidebar.buttons:
-					if button.if_clicked(mouse_x, mouse_y):
-						if isinstance(button, EscapeButton):
+					if button.is_clicked(mouse_x, mouse_y):
+						if (button.name == 'Exit'):
 							sys.exit()
-						elif isinstance(button, EmptyButton):
-							button.use(board.array,
-									   board.cells_w, board.cells_h)
-						elif isinstance(button, FillButton):
-							button.use(board.array,
-									   board.cells_w, board.cells_h)
-						elif isinstance(button, FpsUpButton):
+						elif (button.name == 'Empty board'):
+							button.change_board(board.array,
+									   board.cells_w, board.cells_h, 0)
+						elif (button.name == 'Fill board'):
+							button.change_board(board.array,
+									   board.cells_w, board.cells_h, 1)
+						elif (button.name == 'Increase FPS'):
 							board.fps += 1
-						elif (isinstance(button, FpsDownButton) and
+						elif (button.name == 'Decrease FPS' and
 								board.fps > 1):
 							board.fps -= 1
 			elif (event.type == pg.KEYDOWN):

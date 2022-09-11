@@ -16,11 +16,11 @@ class Board:
         self.fps = STARTING_FPS
         self.last_update = time.time()
 
-    def change_cell(self, mouse_x, mouse_y, new_value):
+    def change_cell(self, mouse_x, mouse_y, value):
         y = mouse_y // CELL_SIZE
         x = (mouse_x - SIDEBAR_WIDTH) // CELL_SIZE
         if (0 <= x < self.cells_w and 0 <= y < self.cells_h):
-            self.array[y][x] = new_value
+            self.array[y][x] = value
 
     def is_time_to_update(self):
         return time.time()-self.last_update > 1/self.fps
