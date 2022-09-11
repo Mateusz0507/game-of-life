@@ -14,9 +14,12 @@ class Sidebar:
             Button('Empty board', self.width/2, 65, 80, 30, 'Empty'),
             Button('Fill board', self.width/2, 105, 80, 30, 'Fill'),
             Button('Decrease FPS', 30, 175, 40, 30, '-'),
-            Button('Increase FPS', 70, 175, 40, 30, '+')]
-        self.fps_display = Display(self.width/2, 145, 80, 30,
-                                   'FPS', STARTING_FPS)
+            Button('Increase FPS', 70, 175, 40, 30, '+'),
+            Button('Reset ticks', self.width/2, 245, 80, 30, 'Reset')
+            ]
+        self.fps_display = Display(self.width/2, 145, 80, 30, 'FPS',
+                                   STARTING_FPS)
+        self.ticks_display = Display(self.width/2, 215, 80, 30, 'ticks', 0)
 
     def is_mouse_over_sidebar(self, mouse_x):
         return mouse_x <= SIDEBAR_WIDTH
@@ -24,5 +27,6 @@ class Sidebar:
     def draw(self, window):
         pg.draw.rect(window, DARK_GREY, [0, 0, self.width, self.height], 0)
         self.fps_display.draw(window)
+        self.ticks_display.draw(window)
         for button in self.buttons:
             button.draw(window)

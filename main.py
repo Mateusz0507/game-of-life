@@ -41,6 +41,8 @@ def main():
 						elif (button.name == 'Decrease FPS' and
 								board.fps > 1):
 							board.fps -= 1
+						elif (button.name == 'Reset ticks'):
+							sidebar.ticks_display.amount = 0
 			elif (event.type == pg.KEYDOWN):
 				if (event.key == pg.K_ESCAPE):
 					sys.exit()
@@ -54,6 +56,7 @@ def main():
 
 		if (board.is_time_to_update() and not board.pause_mode):
 			board.update()
+			sidebar.ticks_display.amount += 1
 		sidebar.fps_display.amount = board.fps
 
 		window.fill(BLACK)
