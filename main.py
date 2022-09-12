@@ -5,7 +5,6 @@ import sys
 from classes.Board import Board
 from classes.Button import Button
 from classes.Sidebar import Sidebar
-from functions import change_mode
 from colors import BLACK
 from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT
 
@@ -45,12 +44,12 @@ def main():
 						elif (button.name == 'Reset frames'):
 							sidebar.frames_display.amount = 0
 						elif (button.name == 'Start/Stop'):
-							change_mode(sidebar)
+							sidebar.change_mode()
 			elif (event.type == pg.KEYDOWN):
 				if (event.key == pg.K_ESCAPE):
 					sys.exit()
 				elif (event.key == pg.K_SPACE):
-					change_mode(sidebar)
+					sidebar.change_mode()
 		if not sidebar.is_mouse_over(mouse_x):
 			if pg.mouse.get_pressed()[0]:
 				board.change_cell(mouse_x, mouse_y, 1)

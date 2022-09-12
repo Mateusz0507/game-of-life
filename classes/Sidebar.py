@@ -3,7 +3,7 @@ import time
 from classes.Button import Button
 from classes.Display import Display
 from constants import SIDEBAR_WIDTH, STARTING_WINDOW_HEIGHT, STARTING_FPS
-from colors import DARK_GREY, GREEN
+from colors import DARK_GREY, RED, GREEN
 
 
 class Sidebar:
@@ -40,3 +40,10 @@ class Sidebar:
         self.frames_display.draw(window)
         for button in self.buttons:
             button.draw(window)
+
+    def change_mode(self):
+        self.pause_mode = not self.pause_mode
+        for button in self.buttons:
+            if (button.name == 'Start/Stop'):
+                button.color = GREEN if self.pause_mode else RED
+                button.sign = 'Start' if self.pause_mode else 'Stop'
