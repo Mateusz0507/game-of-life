@@ -26,7 +26,7 @@ def main():
 			if (event.type == pg.QUIT):
 				sys.exit()
 			elif (event.type == pg.MOUSEBUTTONDOWN and
-					sidebar.is_mouse_over_sidebar(mouse_x)):
+					sidebar.is_mouse_over(mouse_x)):
 				for button in sidebar.buttons:
 					if button.is_clicked(mouse_x, mouse_y):
 						if (button.name == 'Exit'):
@@ -51,7 +51,7 @@ def main():
 					sys.exit()
 				elif (event.key == pg.K_SPACE):
 					change_mode(board, sidebar)
-		if not sidebar.is_mouse_over_sidebar(mouse_x):
+		if not sidebar.is_mouse_over(mouse_x):
 			if pg.mouse.get_pressed()[0]:
 				board.change_cell(mouse_x, mouse_y, 1)
 			elif pg.mouse.get_pressed()[2]:
@@ -65,6 +65,8 @@ def main():
 		window.fill(BLACK)
 		sidebar.draw(window)
 		board.draw(window, window_w, window_h)
+		if not sidebar.is_mouse_over(mouse_x):
+			board.draw_selected_cell(window, mouse_x, mouse_y)
 		pg.display.update()
 
 

@@ -22,7 +22,7 @@ class Sidebar:
                                    STARTING_FPS)
         self.frames_display = Display(self.width/2, 215, 80, 30, 'frames', 0)
 
-    def is_mouse_over_sidebar(self, mouse_x):
+    def is_mouse_over(self, mouse_x):
         return mouse_x <= SIDEBAR_WIDTH
 
     def draw(self, window):

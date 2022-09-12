@@ -57,11 +57,13 @@ class Board:
                                                 CELL_SIZE,
                                                 CELL_SIZE
                                                  ], 0)
-        #color = RED if self.pause_mode else GREEN
-        #corners = [
-        #    [SIDEBAR_WIDTH, 0],
-        #    [window_w, 0],
-        #    [window_w, window_h],
-        #    [SIDEBAR_WIDTH, window_h]
-        #    ]
-        #pg.draw.polygon(window, color, corners, 5)
+
+    def draw_selected_cell(self, window, mouse_x, mouse_y):
+        y = mouse_y // CELL_SIZE
+        x = (mouse_x - SIDEBAR_WIDTH) // CELL_SIZE
+        pg.draw.rect(window, RED, [
+                                    x*CELL_SIZE + SIDEBAR_WIDTH,
+                                    y*CELL_SIZE,
+                                    CELL_SIZE,
+                                    CELL_SIZE
+                                        ], 2)
