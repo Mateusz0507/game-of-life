@@ -23,8 +23,3 @@ class Button:
         text = pg.font.Font(None, FONT_SIZE).render(self.sign, True, BLACK)
         text_rect = text.get_rect(center=(self.x, self.y))
         window.blit(text, text_rect)
-
-    def change_board(self, board, width, height, value):
-        for x in range(width):
-            for y in range(height):
-                board[y][x] = value

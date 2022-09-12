@@ -1,4 +1,5 @@
 import pygame as pg
+import numpy as np
 import sys
 from classes.Board import Board
 from classes.Button import Button
@@ -32,11 +33,9 @@ def main():
 						if (button.name == 'Exit'):
 							sys.exit()
 						elif (button.name == 'Empty board'):
-							button.change_board(board.array,
-									   board.cells_w, board.cells_h, 0)
+							board.array = np.full(board.array.shape, 0)
 						elif (button.name == 'Fill board'):
-							button.change_board(board.array,
-									   board.cells_w, board.cells_h, 1)
+							board.array = np.full(board.array.shape, 1)
 						elif (button.name == 'Increase FPS'):
 							board.fps += 1
 						elif (button.name == 'Decrease FPS' and

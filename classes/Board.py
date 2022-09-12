@@ -1,4 +1,5 @@
 ﻿import pygame as pg
+import numpy as np
 import time
 from constants import SIDEBAR_WIDTH, CELL_SIZE, STARTING_FPS
 from colors import WHITE, RED, GREEN
@@ -6,12 +7,11 @@ from colors import WHITE, RED, GREEN
 
 class Board:
     def __init__(self, window_w, window_h):
-        # self.cells_w/self.cells_h inform about number
-        # of cells in every row/column of self.array
-        self.cells_w = (window_w - SIDEBAR_WIDTH)//CELL_SIZE
-        self.cells_h = window_h//CELL_SIZE
-        self.array = [[0 for i in range(self.cells_w)]
-                         for j in range(self.cells_h)]
+        # self.c_width and self.c_height are dimensions
+        # of self.array expressed in number of cells
+        self.c_width = (window_w - SIDEBAR_WIDTH)//CELL_SIZE
+        self.c_height = window_h//CELL_SIZE
+        self.array = np.zeros((self.c_width, self.c_height), dtype='int8')
         self.pause_mode = True
         self.fps = STARTING_FPS
         self.last_update = time.time()
@@ -19,38 +19,37 @@ class Board:
     def change_cell(self, mouse_x, mouse_y, value):
         y = mouse_y // CELL_SIZE
         x = (mouse_x - SIDEBAR_WIDTH) // CELL_SIZE
-        if (0 <= x < self.cells_w and 0 <= y < self.cells_h):
-            self.array[y][x] = value
+        if (0 <= x < self.c_width and 0 <= y < self.c_height):
+            self.array[x, y] = value
 
     def is_time_to_update(self):
         return time.time()-self.last_update > 1/self.fps
 
     def update(self):
-        new_array = [[0 for i in range(self.cells_w)]
-                        for j in range(self.cells_h)]
-        for x in range(self.cells_w):
-            for y in range(self.cells_h):
+        new_array = np.zeros((self.c_width, self.c_height), dtype='int8')
+        for x in range(self.c_width):
+            for y in range(self.c_height):
                 sum = 0
                 for coords in [
                         (x-1, y-1), (x, y-1), (x+1, y-1),
                         (x-1, y),             (x+1, y),
                         (x-1, y+1), (x, y+1), (x+1, y+1)
                         ]:
-                    if (0 <= coords[0] < self.cells_w and
-                            0 <= coords[1] < self.cells_h):
-                        sum += self.array[coords[1]][coords[0]]
-                if ((self.array[y][x] == 1 and (sum == 2 or sum == 3)) or
-                        (self.array[y][x] == 0 and sum == 3)):
-                    new_array[y][x] = 1
+                    if (0 <= coords[0] < self.c_width and
+                            0 <= coords[1] < self.c_height):
+                        sum += self.array[coords[0], coords[1]]
+                if ((self.array[x, y] == 1 and (sum == 2 or sum == 3)) or
+                        (self.array[x, y] == 0 and sum == 3)):
+                    new_array[x, y] = 1
                 else:
-                    new_array[y][x] = 0
+                    new_array[x, y] = 0
         self.array = new_array
         self.last_update = time.time()
 
     def draw(self, window, window_w, window_h):
-        for x in range(self.cells_w):
-            for y in range(self.cells_h):
-                if (self.array[y][x] == 1):
+        for x in range(self.c_width):
+            for y in range(self.c_height):
+                if (self.array[x, y] == 1):
                     pg.draw.rect(window, WHITE, [
                                                 x*CELL_SIZE + SIDEBAR_WIDTH,
                                                 y*CELL_SIZE,
