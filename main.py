@@ -1,5 +1,6 @@
 import pygame as pg
 import numpy as np
+import time
 import sys
 from classes.Board import Board
 from classes.Button import Button
@@ -37,29 +38,30 @@ def main():
 						elif (button.name == 'Fill board'):
 							board.array = np.full(board.array.shape, 1)
 						elif (button.name == 'Increase FPS'):
-							board.fps += 1
+							sidebar.fps += 1
 						elif (button.name == 'Decrease FPS' and
-								board.fps > 1):
-							board.fps -= 1
+								sidebar.fps > 1):
+							sidebar.fps -= 1
 						elif (button.name == 'Reset frames'):
 							sidebar.frames_display.amount = 0
 						elif (button.name == 'Start/Stop'):
-							change_mode(board, sidebar)
+							change_mode(sidebar)
 			elif (event.type == pg.KEYDOWN):
 				if (event.key == pg.K_ESCAPE):
 					sys.exit()
 				elif (event.key == pg.K_SPACE):
-					change_mode(board, sidebar)
+					change_mode(sidebar)
 		if not sidebar.is_mouse_over(mouse_x):
 			if pg.mouse.get_pressed()[0]:
 				board.change_cell(mouse_x, mouse_y, 1)
 			elif pg.mouse.get_pressed()[2]:
 				board.change_cell(mouse_x, mouse_y, 0)
 
-		if (board.is_time_to_update() and not board.pause_mode):
+		if (sidebar.is_time_to_update() and not sidebar.pause_mode):
 			board.update()
+			sidebar.last_update = time.time()
 			sidebar.frames_display.amount += 1
-		sidebar.fps_display.amount = board.fps
+		sidebar.fps_display.amount = sidebar.fps
 
 		window.fill(BLACK)
 		sidebar.draw(window)

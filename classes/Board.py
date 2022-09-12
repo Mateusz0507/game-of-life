@@ -1,6 +1,5 @@
 ﻿import pygame as pg
 import numpy as np
-import time
 from constants import SIDEBAR_WIDTH, CELL_SIZE, STARTING_FPS
 from colors import WHITE, RED, GREEN
 
@@ -12,18 +11,12 @@ class Board:
         self.c_width = (window_w - SIDEBAR_WIDTH)//CELL_SIZE
         self.c_height = window_h//CELL_SIZE
         self.array = np.zeros((self.c_width, self.c_height), dtype='int8')
-        self.pause_mode = True
-        self.fps = STARTING_FPS
-        self.last_update = time.time()
 
     def change_cell(self, mouse_x, mouse_y, value):
         y = mouse_y // CELL_SIZE
         x = (mouse_x - SIDEBAR_WIDTH) // CELL_SIZE
         if (0 <= x < self.c_width and 0 <= y < self.c_height):
             self.array[x, y] = value
-
-    def is_time_to_update(self):
-        return time.time()-self.last_update > 1/self.fps
 
     def update(self):
         new_array = np.zeros((self.c_width, self.c_height), dtype='int8')
@@ -44,7 +37,6 @@ class Board:
                 else:
                     new_array[x, y] = 0
         self.array = new_array
-        self.last_update = time.time()
 
     def draw(self, window, window_w, window_h):
         for x in range(self.c_width):
