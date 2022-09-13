@@ -1,6 +1,5 @@
 import pygame as pg
 import numpy as np
-import time
 import sys
 from classes.Board import Board
 from classes.Button import Button
@@ -58,8 +57,7 @@ def main():
 
 		if (sidebar.is_time_to_update() and not sidebar.pause_mode):
 			board.update()
-			sidebar.last_update = time.time()
-			sidebar.frames_display.amount += 1
+			sidebar.update_timings()
 		sidebar.fps_display.amount = sidebar.fps
 
 		window.fill(BLACK)

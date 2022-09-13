@@ -1,4 +1,5 @@
 import pygame as pg
+import numpy as np
 import time
 from classes.Button import Button
 from classes.Display import Display
@@ -14,6 +15,8 @@ class Sidebar:
         self.pause_mode = True
         self.fps = STARTING_FPS
         self.last_update = time.time()
+        # Array of board's update timings from last second
+        self.timings_array = np.array([self.last_update], dtype='float64')
 
         self.buttons = [
             Button('Exit', self.width/2, 25, 80, 30, 'Exit'),
@@ -27,19 +30,24 @@ class Sidebar:
         self.fps_display = Display(self.width/2, 145, 80, 30, 'FPS',
                                    STARTING_FPS)
         self.frames_display = Display(self.width/2, 215, 80, 30, 'frames', 0)
+        self.actual_frames_display = Display(self.width/2, 325, 80, 30, 'actual', 0)
 
     def is_time_to_update(self):
-        return time.time()-self.last_update > 1/self.fps
+        self.last_update = time.time()
+        return self.last_update-self.timings_array[-1] > 1/self.fps
 
     def is_mouse_over(self, mouse_x):
         return mouse_x <= SIDEBAR_WIDTH
 
-    def draw(self, window):
-        pg.draw.rect(window, DARK_GREY, [0, 0, self.width, self.height], 0)
-        self.fps_display.draw(window)
-        self.frames_display.draw(window)
-        for button in self.buttons:
-            button.draw(window)
+    def update_timings(self):
+        self.frames_display.amount += 1
+        self.actual_frames_display.amount = self.timings_array.size
+        self.timings_array = np.append(self.timings_array, self.last_update)
+        for timing in self.timings_array:
+            if self.last_update-timing > 1:
+                self.timings_array = np.delete(self.timings_array, 0)
+            else:
+                break
 
     def change_mode(self):
         self.pause_mode = not self.pause_mode
@@ -47,3 +55,11 @@ class Sidebar:
             if (button.name == 'Start/Stop'):
                 button.color = GREEN if self.pause_mode else RED
                 button.sign = 'Start' if self.pause_mode else 'Stop'
+
+    def draw(self, window):
+        pg.draw.rect(window, DARK_GREY, [0, 0, self.width, self.height], 0)
+        self.fps_display.draw(window)
+        self.frames_display.draw(window)
+        self.actual_frames_display.draw(window)
+        for button in self.buttons:
+            button.draw(window)
