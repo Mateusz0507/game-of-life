@@ -4,7 +4,7 @@ import time
 from classes.Button import Button
 from classes.Display import Display
 from constants import SIDEBAR_WIDTH, STARTING_WINDOW_HEIGHT, STARTING_FPS
-from colors import DARK_GREY, RED, GREEN
+from colors import BLACK, DARK_GREY, RED, GREEN
 
 
 class Sidebar:
@@ -27,17 +27,17 @@ class Sidebar:
             Button('Reset frames', self.width/2, 245, 80, 30, 'Reset'),
             Button('Start/Stop', self.width/2, 285, 80, 30, 'Start', GREEN)
             ]
-        self.fps_display = Display(self.width/2, 145, 80, 30, 'FPS',
-                                   STARTING_FPS)
+        self.fps_display = Display(self.width/2, 145, 80, 30, 'FPS', self.fps)
         self.frames_display = Display(self.width/2, 215, 80, 30, 'frames', 0)
-        self.actual_frames_display = Display(self.width/2, 325, 80, 30, 'actual', 0)
+        self.actual_frames_display = Display(self.width/2, 325, 80, 30,
+                                             'actual', 0, BLACK, DARK_GREY)
+
+    def is_mouse_over(self, mouse_x):
+        return mouse_x <= SIDEBAR_WIDTH
 
     def is_time_to_update(self):
         self.last_update = time.time()
         return self.last_update-self.timings_array[-1] > 1/self.fps
-
-    def is_mouse_over(self, mouse_x):
-        return mouse_x <= SIDEBAR_WIDTH
 
     def update_timings(self):
         self.frames_display.amount += 1
