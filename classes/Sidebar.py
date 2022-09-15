@@ -57,7 +57,7 @@ class Sidebar:
                 button.sign = 'Start' if self.pause_mode else 'Stop'
 
     def draw(self, window):
-        pg.draw.rect(window, DARK_GREY, [0, 0, self.width, self.height], 0)
+        pg.draw.rect(window, DARK_GREY, [0, 0, self.width, window.get_height()], 0)
         self.fps_display.draw(window)
         self.frames_display.draw(window)
         self.actual_frames_display.draw(window)

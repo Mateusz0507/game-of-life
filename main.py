@@ -5,7 +5,8 @@ from classes.Board import Board
 from classes.Button import Button
 from classes.Sidebar import Sidebar
 from colors import BLACK
-from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT
+from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, \
+                      SCREEN_WIDTH, SCREEN_HEIGHT
 
 
 def main():
@@ -13,7 +14,8 @@ def main():
     window_w = STARTING_WINDOW_WIDTH # Window width
     window_h = STARTING_WINDOW_HEIGHT # Window height
     pg.display.set_caption("Game of Life")
-    window = pg.display.set_mode((window_w, window_h))
+    window = pg.display.set_mode((window_w, window_h), pg.RESIZABLE)
+    fullscreen = False
 
     # Left sidebar with buttons
     sidebar = Sidebar()
@@ -25,9 +27,26 @@ def main():
         for event in pg.event.get():
             if (event.type == pg.QUIT):
                 sys.exit()
-            elif (event.type == pg.MOUSEBUTTONDOWN and
-                    sidebar.is_mouse_over(mouse_x)):
-                if(event.button == 1):
+            elif (event.type == pg.KEYDOWN):
+                if (event.key == pg.K_ESCAPE):
+                    sys.exit()
+                elif (event.key == pg.K_SPACE):
+                    sidebar.change_mode()
+                elif (event.key == pg.K_f):
+                    fullscreen = not fullscreen
+                    if fullscreen:
+                        window = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pg.FULLSCREEN)
+                    else:
+                        window = pg.display.set_mode((window_w, window_h), pg.RESIZABLE)
+                    board.change_size(window_w, window_h, fullscreen)
+            elif (event.type == pg.VIDEORESIZE):
+                if not fullscreen:
+                    window_w = max(event.w, 200)
+                    window_h = max(event.h, 400)
+                    window = pg.display.set_mode((window_w, window_h), pg.RESIZABLE)
+                    board.change_size(window_w, window_h, fullscreen)
+            elif (event.type == pg.MOUSEBUTTONDOWN):
+                if(sidebar.is_mouse_over(mouse_x) and event.button == 1):
                     for button in sidebar.buttons:
                         if button.is_clicked(mouse_x, mouse_y):
                             if (button.name == 'Exit'):
@@ -45,11 +64,6 @@ def main():
                                 sidebar.frames_display.amount = 0
                             elif (button.name == 'Start/Stop'):
                                 sidebar.change_mode()
-            elif (event.type == pg.KEYDOWN):
-                if (event.key == pg.K_ESCAPE):
-                    sys.exit()
-                elif (event.key == pg.K_SPACE):
-                    sidebar.change_mode()
         if not sidebar.is_mouse_over(mouse_x):
             if pg.mouse.get_pressed()[0]:
                 board.change_cell(mouse_x, mouse_y, 1)

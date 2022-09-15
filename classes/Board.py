@@ -1,6 +1,6 @@
 ﻿import pygame as pg
 import numpy as np
-from constants import SIDEBAR_WIDTH, CELL_SIZE, STARTING_FPS
+from constants import SIDEBAR_WIDTH, CELL_SIZE, STARTING_FPS, SCREEN_WIDTH, SCREEN_HEIGHT
 from colors import WHITE, RED, GREEN
 
 
@@ -11,6 +11,22 @@ class Board:
         self.c_width = (window_w - SIDEBAR_WIDTH)//CELL_SIZE
         self.c_height = window_h//CELL_SIZE
         self.array = np.zeros((self.c_width, self.c_height), dtype='int8')
+
+    def change_size(self, window_w, window_h, fullscreen):
+        if fullscreen:
+            new_c_width = (SCREEN_WIDTH - SIDEBAR_WIDTH)//CELL_SIZE
+            new_c_height = SCREEN_HEIGHT//CELL_SIZE
+        else:
+            new_c_width = (window_w - SIDEBAR_WIDTH)//CELL_SIZE
+            new_c_height = window_h//CELL_SIZE
+        new_array = np.zeros((new_c_width, new_c_height), dtype='int8')
+        min_w = min(self.c_width, new_c_width)
+        min_h = min(self.c_height, new_c_height)
+        part_to_keep = self.array[:min_w, :min_h]
+        new_array[:min_w, :min_h] = part_to_keep
+        self.array = new_array
+        self.c_width = new_c_width
+        self.c_height = new_c_height
 
     def change_cell(self, mouse_x, mouse_y, value):
         y = mouse_y // CELL_SIZE
