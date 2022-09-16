@@ -1,7 +1,8 @@
 ﻿import pygame as pg
 import numpy as np
-from constants import SIDEBAR_WIDTH, CELL_SIZE, SCREEN_WIDTH, SCREEN_HEIGHT
-from colors import WHITE, RED, GREEN
+from colors import WHITE, RED
+from constants import CELL_SIZE, SIDEBAR_WIDTH, SCREEN_WIDTH, SCREEN_HEIGHT
+from functions import empty_array
 
 
 class Board:
@@ -10,7 +11,7 @@ class Board:
         # of the board expressed in number of cells
         self.c_width, self.c_height = \
             self.calculate_cell_coords(window_w, window_h)
-        self.array = np.zeros((self.c_width, self.c_height), dtype='int8')
+        self.array = empty_array(self.c_width, self.c_height)
 
     # Gets coordinates on screen expressed in pixels,
     # returns coordinates of cell on the board
@@ -19,7 +20,13 @@ class Board:
         y = input_y//CELL_SIZE
         return x, y
 
+    def change_cell(self, mouse_x, mouse_y, value):
+        x, y = self.calculate_cell_coords(mouse_x, mouse_y)
+        if (0 <= x < self.c_width and 0 <= y < self.c_height):
+            self.array[x, y] = value
+
     # Resize the board to the given size
+    # while maintaining old cells
     def change_size(self, window_w, window_h, fullscreen):
         if fullscreen:
             new_c_width, new_c_height = \
@@ -27,22 +34,16 @@ class Board:
         else:
             new_c_width, new_c_height = \
                 self.calculate_cell_coords(window_w, window_h)
-        new_array = np.zeros((new_c_width, new_c_height), dtype='int8')
         min_w = min(self.c_width, new_c_width)
         min_h = min(self.c_height, new_c_height)
         part_to_keep = self.array[:min_w, :min_h]
-        new_array[:min_w, :min_h] = part_to_keep
-        self.array = new_array
+        self.array = empty_array(new_c_width, new_c_height)
+        self.array[:min_w, :min_h] = part_to_keep
         self.c_width = new_c_width
         self.c_height = new_c_height
 
-    def change_cell(self, mouse_x, mouse_y, value):
-        x, y = self.calculate_cell_coords(mouse_x, mouse_y)
-        if (0 <= x < self.c_width and 0 <= y < self.c_height):
-            self.array[x, y] = value
-
     def update(self):
-        new_array = np.zeros((self.c_width, self.c_height), dtype='int8')
+        new_array = empty_array(self.c_width, self.c_height)
         for x in range(self.c_width):
             for y in range(self.c_height):
                 sum = 0
@@ -54,7 +55,7 @@ class Board:
                     if (0 <= coords[0] < self.c_width and
                             0 <= coords[1] < self.c_height):
                         sum += self.array[coords[0], coords[1]]
-                if ((self.array[x, y] == 1 and (sum == 2 or sum == 3)) or
+                if ((self.array[x, y] == 1 and 2 <= sum <= 3) or
                         (self.array[x, y] == 0 and sum == 3)):
                     new_array[x, y] = 1
                 else:
@@ -65,18 +66,11 @@ class Board:
         for x in range(self.c_width):
             for y in range(self.c_height):
                 if (self.array[x, y] == 1):
-                    pg.draw.rect(window, WHITE, [
-                                                x*CELL_SIZE + SIDEBAR_WIDTH,
-                                                y*CELL_SIZE,
-                                                CELL_SIZE,
-                                                CELL_SIZE
-                                                 ], 0)
+                    pg.draw.rect(window, WHITE, [x*CELL_SIZE + SIDEBAR_WIDTH,
+                                                 y*CELL_SIZE, CELL_SIZE,
+                                                 CELL_SIZE], 0)
 
     def draw_selected_cell(self, window, mouse_x, mouse_y):
         x, y = self.calculate_cell_coords(mouse_x, mouse_y)
-        pg.draw.rect(window, RED, [
-                                    x*CELL_SIZE + SIDEBAR_WIDTH,
-                                    y*CELL_SIZE,
-                                    CELL_SIZE,
-                                    CELL_SIZE
-                                        ], 2)
+        pg.draw.rect(window, RED, [x*CELL_SIZE + SIDEBAR_WIDTH, y*CELL_SIZE,
+                                   CELL_SIZE, CELL_SIZE], 2)

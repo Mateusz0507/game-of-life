@@ -1,6 +1,6 @@
 ﻿import pygame as pg
-from constants import FONT_SIZE
 from colors import LIGHT_GREY, BLACK
+from constants import FONT_SIZE
 
 
 class Button:
@@ -12,7 +12,8 @@ class Button:
         self.height = height
         self.sign = sign
         self.color = color
-        self.rect = pg.Rect(x - width/2, y - height/2, width, height)
+        self.rect = pg.Rect(0, 0, width, height)
+        self.rect.center = (x, y)
 
     def is_clicked(self, mouse_x, mouse_y):
         return self.rect.collidepoint(mouse_x, mouse_y)

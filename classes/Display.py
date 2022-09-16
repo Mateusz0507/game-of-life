@@ -1,6 +1,6 @@
 ﻿import pygame as pg
-from constants import FONT_SIZE
 from colors import WHITE, BLACK
+from constants import FONT_SIZE
 
 
 class Display:
@@ -14,7 +14,8 @@ class Display:
         self.amount = amount
         self.color = color
         self.background = background
-        self.rect = pg.Rect(x - width/2, y - height/2, width, height)
+        self.rect = pg.Rect(0, 0, width, height)
+        self.rect.center = (x, y)
 
     def draw(self, window):
         pg.draw.rect(window, self.background, self.rect, 0)
