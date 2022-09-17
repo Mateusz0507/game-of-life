@@ -1,7 +1,8 @@
 ﻿import pygame as pg
 import numpy as np
 from colors import WHITE, RED
-from constants import CELL_SIZE, SIDEBAR_WIDTH, SCREEN_WIDTH, SCREEN_HEIGHT, DTYPE
+from constants import DTYPE, CELL_SIZE, SIDEBAR_WIDTH, \
+                      SCREEN_WIDTH, SCREEN_HEIGHT
 
 
 class Board:

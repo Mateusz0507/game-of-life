@@ -1,29 +1,33 @@
 ﻿import pygame as pg
 from colors import WHITE, BLACK
-from constants import FONT_SIZE
+from constants import FONT_SIZE, BUTTON_WIDTH, BUTTON_HEIGHT
 
 
 class Display:
-    def __init__(self, x, y, width, height, words, amount,
-                 color = WHITE, background = BLACK):
+    # (x, y) are the coordinates to the center of the top side of the display
+    def __init__(self, x, y, message, amount, color=WHITE, background=BLACK,
+                 width=BUTTON_WIDTH, height=BUTTON_HEIGHT):
         self.x = x
         self.y = y
-        self.width = width
-        self.height = height
-        self.words = words
+        self.message = message
         self.amount = amount
         self.color = color
         self.background = background
 
+        self.width = width
+        self.height = height
+        self.total_height = (len(self.message) + 1) * self.height
+        self.rect = pg.Rect(0, 0, self.width, self.total_height)
+        self.rect.midtop = (x, y)
+
     def draw(self, window):
-        rectangle = pg.Rect(0, 0, self.width, (len(self.words)+1)*self.height)
-        rectangle.center = (self.x, self.y)
-        pg.draw.rect(window, self.background, rectangle, 0)
-        messages = self.words.copy()
-        messages.append(str(self.amount))
-        for i, message in enumerate(messages):
-            text = pg.font.Font(None, FONT_SIZE).render(message, True,
-                                                        self.color)
-            text_rect = text.get_rect(center=(self.x, self.y +
-                                              (i - (len(messages)-1)/2)*self.height))
+        pg.draw.rect(window, self.background, self.rect, 0)
+
+        words = self.message.copy()
+        words.append(str(self.amount))
+        word_count = len(words)
+        for i, word in enumerate(words):
+            text = pg.font.Font(None, FONT_SIZE).render(word, True, self.color)
+            text_rect = text.get_rect(center=(self.x,
+                                              self.y + (0.5 + i)*self.height))
             window.blit(text, text_rect)
