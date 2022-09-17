@@ -60,7 +60,7 @@ def main():
                                     sidebar.fps > 1):
                                 sidebar.fps -= 1
                             elif (button.name == 'Reset frames'):
-                                sidebar.frames_display.amount = 0
+                                sidebar.frames_counter_display.amount = 0
                             elif (button.name == 'Start/Stop'):
                                 sidebar.change_mode()
         if not sidebar.is_mouse_over(mouse_x):
@@ -72,7 +72,7 @@ def main():
         if (sidebar.is_time_to_update() and not sidebar.pause_mode):
             board.update()
             sidebar.update_timings()
-        sidebar.fps_display.amount = sidebar.fps
+        sidebar.fps_limit_display.amount = sidebar.fps
 
         window.fill(BLACK)
         sidebar.draw(window)

@@ -30,9 +30,12 @@ class Sidebar:
             Button('Reset frames', 0.5*SW,           5*BS + 11*BH, 'Reset'),
             Button('Exit',         0.5*SW,           6*BS + 12*BH, 'Exit')
             ]
-        self.fps_display = Display(0.5*SW, 4*BS + 3*BH, ['FPS limit:'], self.fps)
-        self.actual_frames_display = Display(0.5*SW, 4*BS + 6*BH, ['actual FPS'], 0, BLACK, DARK_GREY)
-        self.frames_display = Display(0.5*SW, 5*BS + 8*BH, ['frames', 'counter:'], 0)
+        self.fps_limit_display = Display(0.5*SW, 4*BS + 3*BH,
+                                         ['FPS limit:'], self.fps)
+        self.actual_fps_display = Display(0.5*SW, 4*BS + 6*BH,
+                                          ['actual FPS'], 0, BLACK, DARK_GREY)
+        self.frames_counter_display = Display(0.5*SW, 5*BS + 8*BH,
+                                              ['frames', 'counter:'], 0)
 
     def is_mouse_over(self, mouse_x):
         return mouse_x <= self.width
@@ -42,9 +45,10 @@ class Sidebar:
         return self.last_update-self.timings_array[-1] > 1/self.fps
 
     def update_timings(self):
-        self.frames_display.amount += 1
-        self.actual_frames_display.amount = self.timings_array.size
+        self.frames_counter_display.amount += 1
+        self.actual_fps_display.amount = self.timings_array.size
         self.timings_array = np.append(self.timings_array, self.last_update)
+        # Remove outdated timings (older than a second ago)
         for timing in self.timings_array:
             if self.last_update-timing > 1:
                 self.timings_array = np.delete(self.timings_array, 0)
@@ -61,8 +65,8 @@ class Sidebar:
     def draw(self, window):
         pg.draw.rect(window, DARK_GREY,
                      [0, 0, self.width, window.get_height()], 0)
-        self.fps_display.draw(window)
-        self.frames_display.draw(window)
-        self.actual_frames_display.draw(window)
+        self.fps_limit_display.draw(window)
+        self.frames_counter_display.draw(window)
+        self.actual_fps_display.draw(window)
         for button in self.buttons:
             button.draw(window)
