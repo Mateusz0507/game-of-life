@@ -3,7 +3,7 @@ import numpy as np
 import time
 from classes.Button import Button
 from classes.Display import Display
-from colors import DARK_GREY, BLACK, RED, GREEN
+from colors import DARK_GREY, BLACK, RED, YELLOW, GREEN
 from constants import STARTING_FPS, STARTING_WINDOW_HEIGHT, \
                       SIDEBAR_WIDTH as SW, BUTTON_SEPARATOR as BS, \
                       BUTTON_WIDTH as BW, BUTTON_HEIGHT as BH
@@ -46,7 +46,7 @@ class Sidebar:
 
     def update_timings(self):
         self.frames_counter_display.amount += 1
-        self.actual_fps_display.amount = self.timings_array.size
+        self.update_actual_fps()
         self.timings_array = np.append(self.timings_array, self.last_update)
         # Remove outdated timings (older than a second ago)
         for timing in self.timings_array:
@@ -54,6 +54,16 @@ class Sidebar:
                 self.timings_array = np.delete(self.timings_array, 0)
             else:
                 break
+
+    def update_actual_fps(self):
+        actual_fps = self.timings_array.size
+        if actual_fps/self.fps > 0.75:
+            self.actual_fps_display.color = GREEN
+        elif actual_fps/self.fps > 0.5:
+            self.actual_fps_display.color = YELLOW
+        else:
+            self.actual_fps_display.color = RED
+        self.actual_fps_display.amount = actual_fps
 
     def change_mode(self):
         self.pause_mode = not self.pause_mode
