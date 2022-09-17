@@ -20,9 +20,9 @@ class Button:
     def is_clicked(self, mouse_x, mouse_y):
         return self.rect.collidepoint(mouse_x, mouse_y)
 
-    def draw(self, window):
-        pg.draw.rect(window, self.color, self.rect, 0)
-        pg.draw.rect(window, BLACK, self.rect, 1)
+    def draw(self, surface):
+        pg.draw.rect(surface, self.color, self.rect, 0)
+        pg.draw.rect(surface, BLACK, self.rect, 1)
         text = pg.font.Font(None, FONT_SIZE).render(self.sign, True, BLACK)
         text_rect = text.get_rect(center=(self.x, self.y + self.height/2))
-        window.blit(text, text_rect)
+        surface.blit(text, text_rect)

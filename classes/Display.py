@@ -20,8 +20,8 @@ class Display:
         self.rect = pg.Rect(0, 0, self.width, self.total_height)
         self.rect.midtop = (x, y)
 
-    def draw(self, window):
-        pg.draw.rect(window, self.background, self.rect, 0)
+    def draw(self, surface):
+        pg.draw.rect(surface, self.background, self.rect, 0)
 
         words = self.message.copy()
         words.append(str(self.amount))
@@ -30,4 +30,4 @@ class Display:
             text = pg.font.Font(None, FONT_SIZE).render(word, True, self.color)
             text_rect = text.get_rect(center=(self.x,
                                               self.y + (0.5 + i)*self.height))
-            window.blit(text, text_rect)
+            surface.blit(text, text_rect)

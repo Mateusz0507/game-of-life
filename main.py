@@ -1,25 +1,24 @@
 import pygame as pg
 import numpy as np
 import sys
-from classes.Board import Board
+from classes.Window import Window
 from classes.Button import Button
 from classes.Sidebar import Sidebar
+from classes.Board import Board
 from colors import BLACK
-from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, \
-                      SCREEN_WIDTH, SCREEN_HEIGHT, MINIMAL_WINDOW_HEIGHT, MINIMAL_WINDOW_WIDTH, DTYPE
+from constants import DTYPE, SCREEN_WIDTH, SCREEN_HEIGHT, \
+                      STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, \
+                      MINIMAL_WINDOW_HEIGHT, MINIMAL_WINDOW_WIDTH
 
 
 def main():
-    window_w = STARTING_WINDOW_WIDTH # Window width
-    window_h = STARTING_WINDOW_HEIGHT # Window height
-    pg.display.set_caption("Game of Life")
-    window = pg.display.set_mode((window_w, window_h), pg.RESIZABLE)
-    fullscreen = False
-
+    # Program's window
+    window = Window('Game of Life',
+                    STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT)
     # Left sidebar with buttons
     sidebar = Sidebar()
-    # Main board where cells are displayed
-    board = Board(window_w, window_h)
+    # Board where cells are displayed
+    board = Board(window.width, window.height)
 
     while True:
         mouse_x, mouse_y = pg.mouse.get_pos()
@@ -32,18 +31,9 @@ def main():
                 elif (event.key == pg.K_SPACE):
                     sidebar.change_mode()
                 elif (event.key == pg.K_f):
-                    fullscreen = not fullscreen
-                    if fullscreen:
-                        window = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pg.FULLSCREEN)
-                    else:
-                        window = pg.display.set_mode((window_w, window_h), pg.RESIZABLE)
-                    board.change_size(window_w, window_h, fullscreen)
+                    window.change_fullscreen_mode(board)
             elif (event.type == pg.VIDEORESIZE):
-                if not fullscreen:
-                    window_w = max(event.w, MINIMAL_WINDOW_WIDTH)
-                    window_h = max(event.h, MINIMAL_WINDOW_HEIGHT)
-                    window = pg.display.set_mode((window_w, window_h), pg.RESIZABLE)
-                    board.change_size(window_w, window_h, fullscreen)
+                window.resize(event.w, event.h, board)
             elif (event.type == pg.MOUSEBUTTONDOWN):
                 if(sidebar.is_mouse_over(mouse_x) and event.button == 1):
                     for button in sidebar.buttons:
@@ -51,9 +41,11 @@ def main():
                             if (button.name == 'Exit'):
                                 sys.exit()
                             elif (button.name == 'Empty board'):
-                                board.array = np.zeros(board.array.shape, dtype=DTYPE)
+                                board.array = np.zeros(board.array.shape,
+                                                       dtype=DTYPE)
                             elif (button.name == 'Fill board'):
-                                board.array = np.ones(board.array.shape, dtype=DTYPE)
+                                board.array = np.ones(board.array.shape,
+                                                      dtype=DTYPE)
                             elif (button.name == 'Increase FPS'):
                                 sidebar.fps += 1
                             elif (button.name == 'Decrease FPS' and
@@ -74,12 +66,7 @@ def main():
             sidebar.update_timings()
         sidebar.fps_limit_display.amount = sidebar.fps
 
-        window.fill(BLACK)
-        sidebar.draw(window)
-        board.draw(window, window_w, window_h)
-        if not sidebar.is_mouse_over(mouse_x):
-            board.draw_selected_cell(window, mouse_x, mouse_y)
-        pg.display.update()
+        window.draw(sidebar, board, mouse_x, mouse_y)
 
 
 if __name__ == '__main__':

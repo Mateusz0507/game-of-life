@@ -62,15 +62,14 @@ class Board:
                     new_array[x, y] = 0
         self.array = new_array
 
-    def draw(self, window, window_w, window_h):
+    def draw(self, surface):
         for x in range(self.c_width):
             for y in range(self.c_height):
                 if (self.array[x, y] == 1):
-                    pg.draw.rect(window, WHITE, [x*CELL_SIZE + SIDEBAR_WIDTH,
-                                                 y*CELL_SIZE, CELL_SIZE,
-                                                 CELL_SIZE], 0)
+                    pg.draw.rect(surface, WHITE, [x*CELL_SIZE + SIDEBAR_WIDTH,
+                                 y*CELL_SIZE, CELL_SIZE, CELL_SIZE], 0)
 
-    def draw_selected_cell(self, window, mouse_x, mouse_y):
+    def draw_selected_cell(self, surface, mouse_x, mouse_y):
         x, y = self.calculate_cell_coords(mouse_x, mouse_y)
-        pg.draw.rect(window, RED, [x*CELL_SIZE + SIDEBAR_WIDTH, y*CELL_SIZE,
+        pg.draw.rect(surface, RED, [x*CELL_SIZE + SIDEBAR_WIDTH, y*CELL_SIZE,
                                    CELL_SIZE, CELL_SIZE], 2)
