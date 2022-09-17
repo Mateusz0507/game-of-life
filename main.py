@@ -6,11 +6,10 @@ from classes.Button import Button
 from classes.Sidebar import Sidebar
 from colors import BLACK
 from constants import STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, \
-                      SCREEN_WIDTH, SCREEN_HEIGHT
+                      SCREEN_WIDTH, SCREEN_HEIGHT, MINIMAL_WINDOW_HEIGHT, MINIMAL_WINDOW_WIDTH, DTYPE
 
 
 def main():
-    pg.init()
     window_w = STARTING_WINDOW_WIDTH # Window width
     window_h = STARTING_WINDOW_HEIGHT # Window height
     pg.display.set_caption("Game of Life")
@@ -41,8 +40,8 @@ def main():
                     board.change_size(window_w, window_h, fullscreen)
             elif (event.type == pg.VIDEORESIZE):
                 if not fullscreen:
-                    window_w = max(event.w, 200)
-                    window_h = max(event.h, 400)
+                    window_w = max(event.w, MINIMAL_WINDOW_WIDTH)
+                    window_h = max(event.h, MINIMAL_WINDOW_HEIGHT)
                     window = pg.display.set_mode((window_w, window_h), pg.RESIZABLE)
                     board.change_size(window_w, window_h, fullscreen)
             elif (event.type == pg.MOUSEBUTTONDOWN):
@@ -52,9 +51,9 @@ def main():
                             if (button.name == 'Exit'):
                                 sys.exit()
                             elif (button.name == 'Empty board'):
-                                board.array = np.full(board.array.shape, 0)
+                                board.array = np.zeros(board.array.shape, dtype=DTYPE)
                             elif (button.name == 'Fill board'):
-                                board.array = np.full(board.array.shape, 1)
+                                board.array = np.ones(board.array.shape, dtype=DTYPE)
                             elif (button.name == 'Increase FPS'):
                                 sidebar.fps += 1
                             elif (button.name == 'Decrease FPS' and
