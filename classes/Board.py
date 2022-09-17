@@ -13,6 +13,9 @@ class Board:
             self.calculate_cell_coords(window_w, window_h)
         self.array = np.zeros((self.c_width, self.c_height), dtype=DTYPE)
 
+    def is_mouse_over(self, mouse_x):
+        return mouse_x >= SIDEBAR_WIDTH
+
     # Gets coordinates on screen expressed in pixels,
     # returns coordinates of cell on the board
     def calculate_cell_coords(self, input_x, input_y):

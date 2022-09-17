@@ -34,6 +34,6 @@ class Window:
         self.surface.fill(BLACK)
         sidebar.draw(self.surface)
         board.draw(self.surface)
-        if not sidebar.is_mouse_over(mouse_x):
+        if board.is_mouse_over(mouse_x):
             board.draw_selected_cell(self.surface, mouse_x, mouse_y)
         pg.display.update()

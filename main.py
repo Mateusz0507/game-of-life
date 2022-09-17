@@ -55,7 +55,7 @@ def main():
                                 sidebar.frames_counter_display.amount = 0
                             elif (button.name == 'Start/Stop'):
                                 sidebar.change_mode()
-        if not sidebar.is_mouse_over(mouse_x):
+        if board.is_mouse_over(mouse_x):
             if pg.mouse.get_pressed()[0]:
                 board.change_cell(mouse_x, mouse_y, 1)
             elif pg.mouse.get_pressed()[2]:
