@@ -7,14 +7,12 @@ from classes.Sidebar import Sidebar
 from classes.Board import Board
 from colors import BLACK
 from constants import DTYPE, SCREEN_WIDTH, SCREEN_HEIGHT, \
-                      STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, \
                       MINIMAL_WINDOW_HEIGHT, MINIMAL_WINDOW_WIDTH
 
 
 def main():
-    # Program's window
-    window = Window('Game of Life',
-                    STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT)
+    # Window of the program
+    window = Window('Game of Life')
     # Left sidebar with buttons
     sidebar = Sidebar()
     # Board where cells are displayed
@@ -65,7 +63,6 @@ def main():
             board.update()
             sidebar.update_timings()
         sidebar.fps_limit_display.amount = sidebar.fps
-
         window.draw(sidebar, board, mouse_x, mouse_y)
 
 

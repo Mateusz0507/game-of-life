@@ -1,11 +1,13 @@
 ﻿import pygame as pg
 from colors import BLACK
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT, \
+                      STARTING_WINDOW_WIDTH, STARTING_WINDOW_HEIGHT, \
                       MINIMAL_WINDOW_WIDTH, MINIMAL_WINDOW_HEIGHT
 
 
 class Window:
-    def __init__(self, name, width, height, fullscreen=False):
+    def __init__(self, name, width=STARTING_WINDOW_WIDTH,
+                 height=STARTING_WINDOW_HEIGHT, fullscreen=False):
         pg.display.set_caption(name)
         self.width = width
         self.height = height

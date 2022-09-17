@@ -10,9 +10,9 @@ from constants import STARTING_FPS, STARTING_WINDOW_HEIGHT, \
 
 
 class Sidebar:
-    def __init__(self):
-        self.width = SW
-        self.height = STARTING_WINDOW_HEIGHT
+    def __init__(self, width=SW, height=STARTING_WINDOW_HEIGHT):
+        self.width = width
+        self.height = height
         self.pause_mode = True
         self.fps = STARTING_FPS
         self.last_update = time.time()
