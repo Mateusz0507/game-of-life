@@ -1,17 +1,16 @@
 ﻿import pygame as pg
 import numpy as np
 from colors import WHITE, RED
-from constants import CELL_SIZE, SIDEBAR_WIDTH, SCREEN_WIDTH, SCREEN_HEIGHT
-from functions import empty_array
+from constants import CELL_SIZE, SIDEBAR_WIDTH, SCREEN_WIDTH, SCREEN_HEIGHT, DTYPE
 
 
 class Board:
     def __init__(self, window_w, window_h):
-        # self.c_width and self.c_height are size
+        # self.c_width and self.c_height are shape
         # of the board expressed in number of cells
         self.c_width, self.c_height = \
             self.calculate_cell_coords(window_w, window_h)
-        self.array = empty_array(self.c_width, self.c_height)
+        self.array = np.zeros((self.c_width, self.c_height), dtype=DTYPE)
 
     # Gets coordinates on screen expressed in pixels,
     # returns coordinates of cell on the board
@@ -25,7 +24,7 @@ class Board:
         if (0 <= x < self.c_width and 0 <= y < self.c_height):
             self.array[x, y] = value
 
-    # Resize the board to the given size
+    # Resize the board to the given shape
     # while maintaining old cells
     def change_size(self, window_w, window_h, fullscreen):
         if fullscreen:
@@ -37,13 +36,13 @@ class Board:
         min_w = min(self.c_width, new_c_width)
         min_h = min(self.c_height, new_c_height)
         part_to_keep = self.array[:min_w, :min_h]
-        self.array = empty_array(new_c_width, new_c_height)
+        self.array = np.zeros((new_c_width, new_c_height), dtype=DTYPE)
         self.array[:min_w, :min_h] = part_to_keep
         self.c_width = new_c_width
         self.c_height = new_c_height
 
     def update(self):
-        new_array = empty_array(self.c_width, self.c_height)
+        new_array = np.zeros(self.array.shape, dtype=DTYPE)
         for x in range(self.c_width):
             for y in range(self.c_height):
                 sum = 0
