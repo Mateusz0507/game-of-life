@@ -19,7 +19,7 @@ class Sidebar:
         self.width = width
         self.height = height
         self.pause_mode = True
-        self.fps = STARTING_FPS
+        self.fps_limit = STARTING_FPS
         self.last_update = time.time()
         # Array of board's update timings from last second
         self.timings_array = np.array([self.last_update], dtype="float64")
@@ -46,7 +46,7 @@ class Sidebar:
             Button("Exit", 0.5 * SW, 6 * BS + 12 * BH, "Exit"),
         ]
         self.fps_limit_display = Display(
-            0.5 * SW, 4 * BS + 3 * BH, ["FPS limit:"], self.fps
+            0.5 * SW, 4 * BS + 3 * BH, ["FPS limit:"], self.fps_limit
         )
         self.actual_fps_display = Display(
             0.5 * SW, 4 * BS + 6 * BH, ["actual FPS"], 0, BLACK, DARK_GREY
@@ -60,7 +60,10 @@ class Sidebar:
 
     def is_time_to_update(self):
         self.last_update = time.time()
-        return self.last_update - self.timings_array[-1] > 1 / self.fps
+        if self.fps_limit == 0:
+            return True
+        else:
+            return self.last_update - self.timings_array[-1] > 1 / self.fps_limit
 
     def update_timings(self):
         self.frames_counter_display.amount += 1
@@ -77,9 +80,9 @@ class Sidebar:
         actual_fps = self.timings_array.size
         self.actual_fps_display.color = (
             GREEN
-            if actual_fps / self.fps > 0.75
+            if actual_fps > 0.75 * self.fps_limit
             else YELLOW
-            if actual_fps / self.fps > 0.5
+            if actual_fps > 0.5 * self.fps_limit
             else RED
         )
         self.actual_fps_display.amount = actual_fps

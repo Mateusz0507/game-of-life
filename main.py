@@ -48,9 +48,11 @@ def main():
                             elif button.name == "Fill board":
                                 board.array = np.ones(board.array.shape, dtype=DTYPE)
                             elif button.name == "Increase FPS":
-                                sidebar.fps += 1
-                            elif button.name == "Decrease FPS" and sidebar.fps > 1:
-                                sidebar.fps -= 1
+                                sidebar.fps_limit += 1
+                            elif (
+                                button.name == "Decrease FPS" and sidebar.fps_limit > 0
+                            ):
+                                sidebar.fps_limit -= 1
                             elif button.name == "Reset frames":
                                 sidebar.frames_counter_display.amount = 0
                             elif button.name == "Start/Stop":
@@ -64,7 +66,7 @@ def main():
         if sidebar.is_time_to_update() and not sidebar.pause_mode:
             board.update()
             sidebar.update_timings()
-        sidebar.fps_limit_display.amount = sidebar.fps
+        sidebar.fps_limit_display.amount = sidebar.fps_limit
         window.draw(sidebar, board, mouse_x, mouse_y)
 
 
