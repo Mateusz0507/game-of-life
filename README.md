@@ -1,5 +1,8 @@
 # Conway's Game of Life
 
+## Visualization
+![](visualization.png)
+
 ## Features & Controls
 - **Press _left/right mouse button_ to revive/kill the highlighted cell**
 - **Resize window with _mouse_, press _F key_ to change fullscreen mode** 
