@@ -5,8 +5,16 @@ from constants import FONT_SIZE, BUTTON_WIDTH, BUTTON_HEIGHT
 
 class Button:
     # (x, y) are the coordinates to the center of the top side of the button
-    def __init__(self, name, x, y, sign, color=LIGHT_GREY,
-                 width=BUTTON_WIDTH, height=BUTTON_HEIGHT):
+    def __init__(
+        self,
+        name,
+        x,
+        y,
+        sign,
+        color=LIGHT_GREY,
+        width=BUTTON_WIDTH,
+        height=BUTTON_HEIGHT,
+    ):
         self.name = name
         self.x = x
         self.y = y
@@ -24,5 +32,5 @@ class Button:
         pg.draw.rect(surface, self.color, self.rect, 0)
         pg.draw.rect(surface, BLACK, self.rect, 1)
         text = pg.font.Font(None, FONT_SIZE).render(self.sign, True, BLACK)
-        text_rect = text.get_rect(center=(self.x, self.y + self.height/2))
+        text_rect = text.get_rect(center=(self.x, self.y + self.height / 2))
         surface.blit(text, text_rect)

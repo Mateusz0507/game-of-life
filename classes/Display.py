@@ -5,8 +5,17 @@ from constants import FONT_SIZE, BUTTON_WIDTH, BUTTON_HEIGHT
 
 class Display:
     # (x, y) are the coordinates to the center of the top side of the display
-    def __init__(self, x, y, message, amount, color=WHITE, background=BLACK,
-                 width=BUTTON_WIDTH, height=BUTTON_HEIGHT):
+    def __init__(
+        self,
+        x,
+        y,
+        message,
+        amount,
+        color=WHITE,
+        background=BLACK,
+        width=BUTTON_WIDTH,
+        height=BUTTON_HEIGHT,
+    ):
         self.x = x
         self.y = y
         self.message = message
@@ -26,6 +35,5 @@ class Display:
         word_count = len(words)
         for i, word in enumerate(words):
             text = pg.font.Font(None, FONT_SIZE).render(word, True, self.color)
-            text_rect = text.get_rect(center=(self.x,
-                                              self.y + (0.5 + i)*self.height))
+            text_rect = text.get_rect(center=(self.x, self.y + (0.5 + i) * self.height))
             surface.blit(text, text_rect)
