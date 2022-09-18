@@ -6,11 +6,11 @@ from constants import DTYPE, CELL_SIZE, SIDEBAR_WIDTH, \
 
 
 class Board:
-    def __init__(self, window_w, window_h):
+    def __init__(self, width, height):
         # self.c_width and self.c_height are shape
         # of the board expressed in number of cells
         self.c_width, self.c_height = \
-            self.calculate_cell_coords(window_w, window_h)
+            self.calculate_cell_coords(width, height)
         self.array = np.zeros((self.c_width, self.c_height), dtype=DTYPE)
 
     def is_mouse_over(self, mouse_x):
@@ -30,13 +30,13 @@ class Board:
 
     # Resize the board to the given shape
     # while maintaining old cells
-    def change_size(self, window_w, window_h, fullscreen):
+    def change_size(self, width, height, fullscreen):
         if fullscreen:
             new_c_width, new_c_height = \
                 self.calculate_cell_coords(SCREEN_WIDTH, SCREEN_HEIGHT)
         else:
             new_c_width, new_c_height = \
-                self.calculate_cell_coords(window_w, window_h)
+                self.calculate_cell_coords(width, height)
         min_w = min(self.c_width, new_c_width)
         min_h = min(self.c_height, new_c_height)
         part_to_keep = self.array[:min_w, :min_h]

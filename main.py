@@ -27,7 +27,7 @@ def main():
                 if (event.key == pg.K_ESCAPE):
                     sys.exit()
                 elif (event.key == pg.K_SPACE):
-                    sidebar.change_mode()
+                    sidebar.change_pause_mode()
                 elif (event.key == pg.K_f):
                     window.change_fullscreen_mode(board)
             elif (event.type == pg.VIDEORESIZE):
@@ -52,7 +52,7 @@ def main():
                             elif (button.name == 'Reset frames'):
                                 sidebar.frames_counter_display.amount = 0
                             elif (button.name == 'Start/Stop'):
-                                sidebar.change_mode()
+                                sidebar.change_pause_mode()
         if board.is_mouse_over(mouse_x):
             if pg.mouse.get_pressed()[0]:
                 board.change_cell(mouse_x, mouse_y, 1)

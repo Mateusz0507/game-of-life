@@ -46,7 +46,6 @@ class Sidebar:
 
     def update_timings(self):
         self.frames_counter_display.amount += 1
-        self.update_actual_fps()
         self.timings_array = np.append(self.timings_array, self.last_update)
         # Remove outdated timings (older than a second ago)
         for timing in self.timings_array:
@@ -54,18 +53,21 @@ class Sidebar:
                 self.timings_array = np.delete(self.timings_array, 0)
             else:
                 break
+        self.update_actual_fps()
 
     def update_actual_fps(self):
         actual_fps = self.timings_array.size
-        if actual_fps/self.fps > 0.75:
+        if self.pause_mode:
+            self.actual_fps_display.color = BLACK
+        elif actual_fps > 0.75 * self.fps:
             self.actual_fps_display.color = GREEN
-        elif actual_fps/self.fps > 0.5:
+        elif actual_fps > 0.5 * self.fps:
             self.actual_fps_display.color = YELLOW
         else:
             self.actual_fps_display.color = RED
         self.actual_fps_display.amount = actual_fps
 
-    def change_mode(self):
+    def change_pause_mode(self):
         self.pause_mode = not self.pause_mode
         for button in self.buttons:
             if (button.name == 'Start/Stop'):

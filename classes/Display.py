@@ -13,7 +13,6 @@ class Display:
         self.amount = amount
         self.color = color
         self.background = background
-
         self.width = width
         self.height = height
         self.total_height = (len(self.message) + 1) * self.height
@@ -22,7 +21,6 @@ class Display:
 
     def draw(self, surface):
         pg.draw.rect(surface, self.background, self.rect, 0)
-
         words = self.message.copy()
         words.append(str(self.amount))
         word_count = len(words)
