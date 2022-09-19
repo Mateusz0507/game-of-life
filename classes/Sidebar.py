@@ -20,7 +20,7 @@ class Sidebar:
         self.height = height
         self.pause_mode = True
         self.fps_limit = STARTING_FPS
-        self.last_update = time.time()
+        self.last_update = time.perf_counter()
         # Array of board's update timings from last second
         self.timings_array = np.array([self.last_update], dtype="float64")
 
@@ -59,7 +59,7 @@ class Sidebar:
         return mouse_x <= self.width
 
     def is_time_to_update(self):
-        self.last_update = time.time()
+        self.last_update = time.perf_counter()
         if self.fps_limit == 0:
             return True
         else:
