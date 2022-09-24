@@ -1,6 +1,7 @@
 ﻿import pygame as pg
 from colors import BLACK
 from constants import (
+    CELL_SIZE,
     SCREEN_WIDTH,
     SCREEN_HEIGHT,
     STARTING_WINDOW_WIDTH,
@@ -34,8 +35,10 @@ class Window:
             self.surface = pg.display.set_mode((self.width, self.height), pg.RESIZABLE)
         board.change_size(self.width, self.height, self.fullscreen)
 
-    def resize(self, new_width, new_height, board):
+    def resize(self, event_width, event_height, board):
         if not self.fullscreen:
+            new_width = CELL_SIZE * (event_width // CELL_SIZE)
+            new_height = CELL_SIZE * (event_height // CELL_SIZE)
             self.width = max(new_width, MINIMAL_WINDOW_WIDTH)
             self.height = max(new_height, MINIMAL_WINDOW_HEIGHT)
             self.surface = pg.display.set_mode((self.width, self.height), pg.RESIZABLE)
